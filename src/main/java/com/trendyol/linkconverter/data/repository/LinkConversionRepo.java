@@ -8,6 +8,4 @@ import java.util.Optional;
 @Repository
 public interface LinkConversionRepo extends BaseRepository<LinkConversion> {
 
-    Optional<LinkConversion> findByWebLink(String webLink);
-    Optional<LinkConversion> findByDeepLink(String webLink);
 }

@@ -1,0 +1,69 @@
+{
+	"info": {
+		"_postman_id": "5da3eea4-0e83-44db-9943-39ea40679f48",
+		"name": "Link Converter",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Deep Link",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"link\" : \"https://www.trendyol.com/casio/saat-p-1925865?boutiqueId=439892&merchantId=105064\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/link/convert-to-deep-link",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"link",
+						"convert-to-deep-link"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Web Link",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"link\" : \"ty://?Page=Product&ContentId=1925865&CampaignId=439892&MerchantId=105064\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/link/convert-to-web-link",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"link",
+						"convert-to-web-link"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

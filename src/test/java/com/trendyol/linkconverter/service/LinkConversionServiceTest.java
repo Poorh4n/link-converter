@@ -9,32 +9,20 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.springframework.hateoas.Link;
 
-import java.util.Optional;
-import java.util.UUID;
 
 public class LinkConversionServiceTest {
 
-    private static final String webLink = "https://www.trendyol.com/test";
-    private static final String deepLink = "ty://test";
     private static LinkConversionRepo linkConversionRepo = Mockito.mock(LinkConversionRepo.class);
     private static LinkConversion linkConversion;
-    private static UUID rand;
     private static LinkConversionService service;
     private static final LinkMapper linkMapper = Mappers.getMapper(LinkMapper.class);
 
     @BeforeAll
     public static void init() {
-       rand =  UUID.randomUUID();
        linkConversion = new LinkConversion();
-       linkConversion.setDeepLink(deepLink);
-       linkConversion.setWebLink(webLink);
        linkConversion.setCreatedBy("Test User");
        service = new LinkConversionService(linkConversionRepo, linkMapper);
     }
@@ -43,21 +31,31 @@ public class LinkConversionServiceTest {
     @DisplayName("Get Web Link")
     public void getWebLink() {
 
-        Mockito.when(linkConversionRepo.findByDeepLink(deepLink)).thenReturn(Optional.of(linkConversion));
-        DeepLinkConversionRequest req = new DeepLinkConversionRequest();
-        req.setLink(deepLink);
-        Assertions.assertEquals(webLink, service.getWebLink(req).getConvertedLink());
+        DeepLinkConversionRequest request = new DeepLinkConversionRequest();
+        request.setLink("ty://?Page=Product&ContentId=1925865&CampaignId=439892&MerchantId=105064");
+        Assertions.assertEquals("https://www.trendyol.com/brand/name-p-1925865?boutiqueId=439892&merchantId=105064",service.getWebLink(request).getConvertedLink());
 
+        request.setLink("ty://?Page=Search&Query=elbise");
+        Assertions.assertEquals("https://www.trendyol.com/sr?q=elbise",service.getWebLink(request).getConvertedLink());
+
+        request.setLink("ty://?Page=Favorites");
+        Assertions.assertEquals("https://www.trendyol.com",service.getWebLink(request).getConvertedLink());
 
     }
 
     @Test
     @DisplayName("Get Deep Link")
     public void getDeepLink() {
-        Mockito.when(linkConversionRepo.findByWebLink(webLink)).thenReturn(Optional.of(linkConversion));
-        WebLinkConversionRequest req = new WebLinkConversionRequest();
-        req.setLink(webLink);
-        Assertions.assertEquals(deepLink, service.getDeepLink(req).getConvertedLink());
+
+        WebLinkConversionRequest request = new WebLinkConversionRequest();
+        request.setLink("https://www.trendyol.com/casio/saat-p-1925865?boutiqueId=439892&merchantId=105064");
+        Assertions.assertEquals("ty://?Page=Product&ContentId=1925865&CampaignId=439892&MerchantId=105064",service.getDeepLink(request).getConvertedLink());
+
+        request.setLink("https://www.trendyol.com/sr?q=elbise");
+        Assertions.assertEquals("ty://?Page=Search&Query=elbise",service.getDeepLink(request).getConvertedLink());
+
+        request.setLink("https://www.trendyol.com/Hesabim/Favoriler");
+        Assertions.assertEquals("ty://?Page=Home",service.getDeepLink(request).getConvertedLink());
 
     }
 

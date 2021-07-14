@@ -75,7 +75,6 @@
 							<version>1.18.12</version>
 						</path>
 					</annotationProcessorPaths>
-                    <compilerArgs>--enable-preview</compilerArgs>
                 </configuration>
             </plugin>
         </plugins>

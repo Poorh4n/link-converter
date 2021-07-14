@@ -1,0 +1,4 @@
+com/trendyol/linkconverter/model/DeepLinkConversionTest.class
+com/trendyol/linkconverter/controller/LinkConversionControllerTest.class
+com/trendyol/linkconverter/model/WebLinkConversionRequestTest.class
+com/trendyol/linkconverter/service/LinkConversionServiceTest.class
