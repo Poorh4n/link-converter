@@ -30,9 +30,7 @@ public class LinkConversionController {
 
     @PostMapping("/convert-to-deep-link")
     @Operation(summary = "Get Deep Link of a web link", description = SwaggerDescription.DEEP_LINK_CONVERTER, tags = { SwaggerDescription.LINK_CONVERTER_V0 })
-    public ResponseEntity<LinkConversionResponse> getDeepLink(@RequestBody @Valid
-                                                                  @Parameter(description = SwaggerDescription.WEB_LINK , example = "https://www.trendyol.com")
-                                                                          WebLinkConversionRequest req) {
+    public ResponseEntity<LinkConversionResponse> getDeepLink(@RequestBody @Valid @Parameter(description = SwaggerDescription.WEB_LINK , example = "https://www.trendyol.com") WebLinkConversionRequest req) {
         return ResponseEntity.ok(linkConversionService.getDeepLink(req));
 
     }

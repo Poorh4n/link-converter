@@ -8,4 +8,6 @@ import java.util.Optional;
 @Repository
 public interface LinkConversionRepo extends BaseRepository<LinkConversion> {
 
+    Optional<LinkConversion> findFirstBySource(String source);
+
 }
